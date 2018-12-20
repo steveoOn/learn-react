@@ -3,6 +3,7 @@ import React from 'react'
 //导入默认值（styled）和单独模块（css）
 import styled, { css } from 'styled-components'
 import TabGroup from './TabGroup'
+import { Bell } from 'react-feather'
 
 const NavContainer = styled.div`
   display: fixed;
@@ -12,6 +13,18 @@ const NavContainer = styled.div`
   background: #53a600;
 `
 const Label = styled.div``
+
+const StyledSvg = styled.button`
+  padding: 0;
+  width: 36px;
+  height: 36px;
+  border: none;
+  outline: none;
+  background: transparent;
+  position: absolute;
+  right: 120px;
+  top: 6px;
+`
 
 class Header extends React.Component {
   render() {
@@ -24,6 +37,9 @@ class Header extends React.Component {
           </Label>
           <Label label="tab3">oh no</Label>
         </TabGroup>
+        <StyledSvg>
+          <Bell color="white" />
+        </StyledSvg>
       </NavContainer>
     )
   }
