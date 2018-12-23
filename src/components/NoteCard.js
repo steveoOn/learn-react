@@ -110,6 +110,7 @@ const Tag = styled.div`
 class NoteCard extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
+    isNew: PropTypes.bool,
   }
   render() {
     return (

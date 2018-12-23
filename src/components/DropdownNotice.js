@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import TabGroup from './TabGroup'
-import NoteContent from './NoteContent'
+import TodayNoteContent from './TodayNoteContent'
+import EarlyNoteContent from './EarlyNoteContent'
 
 const NoticeContainer = styled.div`
   width: 376px;
@@ -22,7 +23,15 @@ class DropdownNotice extends Component {
       <NoticeContainer>
         <TabGroup>
           <Label label="通知">
-            <NoteContent />
+            <TodayNoteContent>
+              <div isNew={true} text="hello siwen" key={this.props.text} />
+              <div isNew={false} text="hello ren" key={this.props.text} />
+              <div isNew={false} text="text content" key={this.props.text} />
+            </TodayNoteContent>
+            <EarlyNoteContent>
+              <div isNew={true} text="early siwen" key={this.props.text} />
+              <div isNew={true} text="early ren" key={this.props.text} />
+            </EarlyNoteContent>
           </Label>
           <Label label="待办">暂无待办事项</Label>
           <Label label="公告">暂无公告</Label>
