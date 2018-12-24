@@ -10,9 +10,18 @@ const TabBar = styled.div`
 const TabList = styled.ol`
   padding: 0;
   margin: 15px 0 0 0;
+
+  ${props =>
+    props.center &&
+    css`
+      margin-left: 25%;
+    `}
 `
 
-const TabContent = styled.div``
+const TabContent = styled.div`
+  max-height: ${props => (props.isNote ? '500px' : '100%')};
+  overflow: scroll;
+`
 
 class TabGroup extends Component {
   static propTypes = {
@@ -36,23 +45,24 @@ class TabGroup extends Component {
     //导入 state 中的 keys
     return (
       <TabBar>
-        <TabList>
+        <TabList center={this.props.center}>
           {/*React 的 children 只有一个元素时，并不是一个数组，因此可强制转换成数组后再 map */}
           {React.Children.toArray(this.props.children).map(child => {
-            const { label, bgColor, paddingLR } = child.props
+            const { label, bgColor, paddingLR, secondary } = child.props
             return (
               <Tab
                 activeTab={this.state.activeTab}
                 key={label}
                 label={label}
                 bgColor={bgColor}
+                secondary={secondary}
                 paddingLR={paddingLR}
                 onClick={this.handleClick}
               />
             )
           })}
         </TabList>
-        <TabContent>
+        <TabContent isNote={this.props.isNote}>
           {React.Children.toArray(this.props.children).map(child => {
             if (child.props.label !== this.state.activeTab) return undefined
             return child.props.children

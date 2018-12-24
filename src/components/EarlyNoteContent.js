@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
 
-const Container = styled.div`
-  padding: 0 0 14px 0;
-  max-height: 500px;
-  overflow: scroll;
-`
 const EarlyContent = styled.div``
 
 const Title = styled.h1`
@@ -25,15 +20,21 @@ class EarlyNoteContent extends Component {
 
   render() {
     return (
-      <Container>
-        <EarlyContent>
-          <Title>稍早</Title>
-          {React.Children.toArray(this.props.children).map(child => {
-            const { isNew, text } = child.props
-            return <NoteCard isNew={isNew} text={text} key={text} />
-          })}
-        </EarlyContent>
-      </Container>
+      <EarlyContent>
+        <Title>稍早</Title>
+        {React.Children.toArray(this.props.children).map(child => {
+          const { isNew, text, isNote, barTitle } = child.props
+          return (
+            <NoteCard
+              isNew={isNew}
+              text={text}
+              key={text}
+              isNote={isNote}
+              barTitle={barTitle}
+            />
+          )
+        })}
+      </EarlyContent>
     )
   }
 }

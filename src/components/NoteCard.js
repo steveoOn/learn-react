@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
-import { Bell } from 'react-feather'
+import { Bell, X } from 'react-feather'
 
 const CardContainer = styled.div`
   width: 348px;
@@ -17,8 +17,9 @@ const TopBar = styled.div`
   background: rgba(244, 244, 244, 1);
   border-radius: 3px 3px 0px 0px;
   display: grid;
-  grid-template-columns: 0.3fr 0.2fr 1fr;
+  grid-template-columns: 0.4fr 1fr;
   padding: 0 8px;
+  position: relative;
 `
 
 const TextContent = styled.p`
@@ -35,15 +36,18 @@ const TextContent = styled.p`
 const Left = styled.div`
   display: grid;
   height: 30px;
-  grid-template-columns: ${props =>
-    props.isNew ? '0.1fr 0.8fr 0.1fr' : 'auto auto'};
+  grid-template-columns: 0.2fr 0.6fr 1fr;
   grid-column-gap: 8px;
   align-items: center;
 `
 
 const Right = styled(Left)`
-  grid-template-columns: 68px 58px;
+  grid-template-columns: 68px 52px;
   justify-self: end;
+
+  ${CardContainer}:hover & {
+    display: none;
+  }
 `
 
 const Date = styled.p`
@@ -54,10 +58,26 @@ const Date = styled.p`
 `
 const Time = styled(Date)``
 
-const IconNote = styled.div`
+const IconNote = styled.button`
   width: 14px;
   height: 14px;
   padding: 0;
+  position: relative;
+  border: none;
+  background: transparent;
+  outline: none;
+`
+const IconClose = styled(IconNote)`
+  position: absolute;
+  top: ${(30 - 14) / 2}px;
+  right: 8px;
+  display: none;
+  border-radius: 3px;
+
+  ${CardContainer}:hover & {
+    display: initial;
+    background: #fbfbfb;
+  }
 `
 
 const BarTitle = styled.h4`
@@ -70,19 +90,24 @@ const BarTitle = styled.h4`
 const Badge = styled.div`
   width: 6px;
   height: 6px;
-  background: ${props => (props.isNew ? 'rgba(236, 55, 77, 1)' : 'blue')};
+  background: ${props =>
+    props.isNew ? 'rgba(236, 55, 77, 1)' : 'transparent'};
   border-radius: 3px;
+  position: absolute;
+  top: 0;
+  right: 1px;
 `
 
 const Tag = styled.div`
   height: 16px;
   width: auto;
   border-radius: 3px;
-  border: 1px solid #51A500;
+  border: 1px solid #51a500;
   font-size: 10px;
   font-weight: 400;
   align-self: center;
   text-align: center;
+  display: ${props => (props.isNote ? 'none' : 'initial')};
 
   ${props =>
     props.normal &&
@@ -90,44 +115,41 @@ const Tag = styled.div`
       color: #51a500;
       border: 1px solid #51a500;
       background: #e8f4dc;
-    `}
-  ${props =>
-    props.grey &&
-    css`
-      color: #bbbbbb;
-      border: 1px solid #cccccc;
-      background: #f4f4f4;
-    `}
-  ${props =>
-    props.warring &&
-    css`
-      color: #f5a623;
-      border: 1px solid #f5a623;
-      background: #f9ecd8;
-    `}
+    `};
 `
 
 class NoteCard extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     isNew: PropTypes.bool,
+    barTitle: PropTypes.string,
   }
+
+  removeNoteCard = () => {
+    console.log('remove:')
+  }
+
   render() {
     return (
       <CardContainer>
         <TopBar>
-          <Left isNew={this.props.isNew}>
+          <Left>
             <IconNote>
               <Bell color="#999" size={14} />
+              <Badge isNew={this.props.isNew} />
             </IconNote>
-            <BarTitle>通知</BarTitle>
-            <Badge isNew={this.props.isNew} />
+            <BarTitle>{this.props.barTitle}</BarTitle>
+            <Tag normal isNote={this.props.isNote}>
+              待审批
+            </Tag>
           </Left>
-          <Tag normal>待审批</Tag>
           <Right>
             <Date>2018-01-01</Date>
             <Time>12:00:59</Time>
           </Right>
+          <IconClose onClick={this.removeNoteCard}>
+            <X color="#999" size={14} />
+          </IconClose>
         </TopBar>
         <TextContent>{this.props.text}</TextContent>
       </CardContainer>
@@ -138,6 +160,7 @@ class NoteCard extends Component {
 NoteCard.defaultProps = {
   text:
     '马上到期了！内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式',
+  barTitle: '通知',
 }
 
 export default NoteCard

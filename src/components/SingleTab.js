@@ -22,6 +22,19 @@ const TabLi = styled.li`
     cursor: pointer;
     background: ${props => (props.actived ? 'white' : '#86DA1C')};
   }
+
+  ${props =>
+    props.secondary &&
+    css`
+      background: white;
+      color: #333;
+      border-bottom: ${props => (props.actived ? '2px solid #53a600' : 'none')};
+
+      &:hover {
+        color: #53a600;
+        background: ${props => (props.actived ? 'white' : 'transparent')};
+      }
+    `}
 `
 
 class Tab extends Component {
@@ -42,6 +55,7 @@ class Tab extends Component {
       <TabLi
         onClick={this.onClick}
         bgColor={this.props.bgColor}
+        secondary={this.props.secondary}
         paddingLR={this.props.paddingLR}
         //利用 activeTab state 的状态做条件判断
         actived={this.props.activeTab === this.props.label ? true : false}
