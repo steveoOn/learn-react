@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { Bell, X } from 'react-feather'
 
-const CardContainer = styled.div`
+const CardContainer = styled.li`
   width: 348px;
   height: auto;
   background: rgba(249, 249, 249, 1);
   border-radius: 3px;
   margin: 8px auto;
+  list-style: none;
 `
 
 const TopBar = styled.div`
@@ -126,12 +127,12 @@ class NoteCard extends Component {
   }
 
   removeNoteCard = () => {
-    console.log('remove:')
+    console.log('text:', this.props.text)
   }
 
   render() {
     return (
-      <CardContainer>
+      <CardContainer id={this.props.id}>
         <TopBar>
           <Left>
             <IconNote>

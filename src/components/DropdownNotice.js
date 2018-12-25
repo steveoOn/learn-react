@@ -30,6 +30,7 @@ class DropdownNotice extends Component {
                 text="你的劳动合同 编号2018092625553 马上到期了！内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样"
                 key={this.props.text}
                 isNote={true}
+                id={1}
               />
               <div
                 isNew
@@ -38,7 +39,6 @@ class DropdownNotice extends Component {
                 isNote={true}
               />
               <div
-                isNew={false}
                 text="你的同事李晓明刚刚转正了！"
                 key={this.props.text}
                 isNote={true}

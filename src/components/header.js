@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import TabGroup from './TabGroup'
 import { Bell } from 'react-feather'
+import TodoList from './TodoList'
 
 const NavContainer = styled.div`
   display: fixed;
@@ -31,11 +32,14 @@ class Header extends React.Component {
     return (
       <NavContainer>
         <TabGroup>
-          <Label label="tab1">hi siwen</Label>
+          <Label label="tab1">
+            <TodoList />
+          </Label>
           <Label label="tab2" paddingLR="46px">
             hi louie
           </Label>
           <Label label="tab3">oh no</Label>
+          <Label label="tab4">oh yes</Label>
         </TabGroup>
         <StyledSvg>
           <Bell color="white" />

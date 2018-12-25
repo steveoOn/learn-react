@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
 
-const EarlyContent = styled.div``
+const EarlyContent = styled.ol`
+  padding: 0;
+`
 
 const Title = styled.h1`
   font-size: 16px;

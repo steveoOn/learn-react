@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
 
-const TodayContent = styled.div``
+const TodayContent = styled.ol`
+  padding: 0;
+`
 
 const Title = styled.h1`
   font-size: 16px;
@@ -23,7 +25,7 @@ class TodayNoteContent extends Component {
       <TodayContent>
         <Title>今天</Title>
         {React.Children.toArray(this.props.children).map(child => {
-          const { isNew, text, isNote, barTitle } = child.props
+          const { isNew, text, isNote, barTitle, id } = child.props
           return (
             <NoteCard
               isNew={isNew}
@@ -31,6 +33,7 @@ class TodayNoteContent extends Component {
               key={text}
               isNote={isNote}
               barTitle={barTitle}
+              id={id}
             />
           )
         })}

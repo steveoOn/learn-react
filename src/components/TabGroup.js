@@ -3,9 +3,7 @@ import React, { Component } from 'react'
 import styled, { css } from 'styled-components'
 import Tab from './SingleTab'
 
-const TabBar = styled.div`
-  background: transparent;
-`
+const TabBar = styled.div``
 
 const TabList = styled.ol`
   padding: 0;
