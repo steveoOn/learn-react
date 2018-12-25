@@ -19,6 +19,8 @@ const Input = styled.input`
   color: #676e78;
   font-size: 14px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.08);
+  outline-color: #2d58dd;
+  outline-width: 2px;
 
   &::placeholder {
     font-size: 14px;
@@ -58,6 +60,11 @@ const Button = styled.button`
   position: absolute;
   top: 26px;
   right: 32px;
+  outline: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 class TodoList extends Component {
@@ -68,9 +75,21 @@ class TodoList extends Component {
         { id: 1, text: 'list1' },
         { id: 2, text: 'list2' },
         { id: 3, text: 'list3' },
-        { id: 4, text: 'list4' },
       ],
+      count: 3,
     }
+  }
+
+  addList = e => {
+    const newList = this.newList.value
+    //使用 state 中的 count 计算 ID，使其每次 +1
+    this.setState({
+      lists: [
+        ...this.state.lists,
+        { id: (this.state.count += 1), text: newList },
+      ],
+    })
+    console.log('value:', newList)
   }
 
   render() {
@@ -79,8 +98,15 @@ class TodoList extends Component {
     return (
       <Container>
         <TodoContent>
-          <Input placeholder="把要做的事情写下来" />
-          <Button>add</Button>
+          <Input
+            ref={input => {
+              this.newList = input
+            }}
+            placeholder="把要做的事情写下来"
+          />
+          <Button type="submit" onClick={this.addList}>
+            add
+          </Button>
           {lists.map(list => {
             return <List key={list.id}>{list.text}</List>
           })}
