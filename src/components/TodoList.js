@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 
-const Container = styled.div`
+//收集用户输入的信息需用 form 标签
+const Container = styled.form`
   background: none;
   width: 1024px;
   height: auto;
@@ -47,7 +48,7 @@ const List = styled.li`
   color: #676e78;
 `
 
-const Button = styled.button`
+const Button = styled.input`
   background: #2d58dd;
   padding: 6px 10px;
   color: white;
@@ -77,36 +78,55 @@ class TodoList extends Component {
         { id: 3, text: 'list3' },
       ],
       count: 3,
+      hasValue: false,
     }
   }
 
+  preventFormRefresh = e => {
+    e.preventDefault()
+  }
+
   addList = e => {
+    //把 input 的值赋给 newList
     const newList = this.newList.value
     //使用 state 中的 count 计算 ID，使其每次 +1
-    this.setState({
-      lists: [
-        ...this.state.lists,
-        { id: (this.state.count += 1), text: newList },
-      ],
-    })
-    console.log('value:', newList)
+    if (newList !== '') {
+      this.setState({
+        lists: [
+          ...this.state.lists,
+          { id: (this.state.count += 1), text: newList },
+        ],
+      })
+
+      console.log('value:', newList)
+    }
+
+    //清空 input 的值
+    this.inputValue.reset()
   }
 
   render() {
     const { lists } = this.state
     console.log('state:', lists)
     return (
-      <Container>
+      <Container
+        //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
+        onSubmit={this.preventFormRefresh}
+        //得到 form 中的 input 值
+        ref={input => {
+          this.inputValue = input
+        }}
+      >
         <TodoContent>
           <Input
+            //获取 input 的值
             ref={input => {
               this.newList = input
             }}
             placeholder="把要做的事情写下来"
+            hasValue={this.state.hasValue}
           />
-          <Button type="submit" onClick={this.addList}>
-            add
-          </Button>
+          <Button type="submit" onClick={this.addList} value="add" />
           {lists.map(list => {
             return <List key={list.id}>{list.text}</List>
           })}
