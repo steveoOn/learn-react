@@ -40,12 +40,12 @@ const TodoContent = styled.ol`
 const List = styled.li`
   background: #ffffff;
   width: ${453 - 28}px;
-  height: ${48 - 28}px;
+  min-height: ${48 - 28}px;
   border-radius: 4px;
   margin: 10px auto;
   padding: 14px;
   font-size: 14px;
-  color: #676e78;
+  color: ${props => (props.checked ? 'rgba(0, 0, 0, 0.3)' : '#676e78')};
 `
 
 const Button = styled.input`
@@ -68,6 +68,14 @@ const Button = styled.input`
   }
 `
 
+const Label = styled.label``
+
+const CheckBox = styled.input``
+
+const Span = styled.span`
+  padding-left: 8px;
+`
+
 class TodoList extends Component {
   constructor(props) {
     super(props)
@@ -78,12 +86,20 @@ class TodoList extends Component {
         { id: 3, text: 'list3' },
       ],
       count: 3,
-      hasValue: false,
+      isChecked: false,
     }
   }
 
   preventFormRefresh = e => {
     e.preventDefault()
+  }
+
+  handleCheck = e => {
+    const eventChecked = e.target.checked
+    this.setState({
+      isChecked: eventChecked,
+    })
+    console.log('value:', this.state.isChecked)
   }
 
   addList = e => {
@@ -97,8 +113,6 @@ class TodoList extends Component {
           { id: (this.state.count += 1), text: newList },
         ],
       })
-
-      console.log('value:', newList)
     }
 
     //清空 input 的值
@@ -107,7 +121,7 @@ class TodoList extends Component {
 
   render() {
     const { lists } = this.state
-    console.log('state:', lists)
+    //console.log('state:', lists)
     return (
       <Container
         //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
@@ -127,7 +141,18 @@ class TodoList extends Component {
           />
           <Button type="submit" onClick={this.addList} value="add" />
           {lists.map(list => {
-            return <List key={list.id}>{list.text}</List>
+            return (
+              <List key={list.id} checked={this.state.isChecked ? true : false}>
+                <Label>
+                  <CheckBox
+                    id="todo"
+                    type="checkbox"
+                    onChange={this.handleCheck}
+                  />
+                  <Span>{list.text}</Span>
+                </Label>
+              </List>
+            )
           })}
         </TodoContent>
       </Container>
