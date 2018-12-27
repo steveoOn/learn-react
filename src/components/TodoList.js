@@ -124,7 +124,6 @@ class TodoList extends Component {
               this.newList = input
             }}
             placeholder="把要做的事情写下来"
-            hasValue={this.state.hasValue}
           />
           <Button type="submit" onClick={this.addList} value="add" />
           {lists.map(list => {

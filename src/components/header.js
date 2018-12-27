@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 //导入默认值（styled）和单独模块（css）
 import styled from 'styled-components'
