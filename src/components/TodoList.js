@@ -45,7 +45,6 @@ const List = styled.li`
   margin: 10px auto;
   padding: 14px;
   font-size: 14px;
-  color: ${props => (props.checked ? 'rgba(0, 0, 0, 0.3)' : '#676e78')};
 `
 
 const Button = styled.input`
@@ -68,12 +67,15 @@ const Button = styled.input`
   }
 `
 
-const Label = styled.label``
+const Label = styled.label`
+  color: ${props => (props.isDone ? 'blue' : '#676e78')};
+`
 
 const CheckBox = styled.input``
 
 const Span = styled.span`
   padding-left: 8px;
+  color: ${props => (props.changeTextStyle ? 'green' : '')};
 `
 
 class TodoList extends Component {
@@ -81,12 +83,11 @@ class TodoList extends Component {
     super(props)
     this.state = {
       lists: [
-        { id: 1, text: 'list1' },
-        { id: 2, text: 'list2' },
-        { id: 3, text: 'list3' },
+        { id: 1, text: 'list1', done: false },
+        { id: 2, text: 'list2', done: false },
+        { id: 3, text: 'list3', done: false },
       ],
       count: 3,
-      isChecked: false,
     }
   }
 
@@ -94,12 +95,19 @@ class TodoList extends Component {
     e.preventDefault()
   }
 
-  handleCheck = e => {
-    const eventChecked = e.target.checked
-    this.setState({
-      isChecked: eventChecked,
-    })
-    console.log('value:', this.state.isChecked)
+  handleCheck = (list, isChecked) => {
+    //const eventChecked = e.target.checked
+    if (isChecked) {
+      console.log('checkbox is true', 'text' + list.text)
+      console.log('activeLi:', this.state.activeLi)
+      // this.setState({
+      //   lists: [
+      //     { id: 1, text: 'list1', done: isChecked },
+      //     { id: 2, text: 'list2', done: isChecked },
+      //     { id: 3, text: 'list3', done: isChecked },
+      //   ],
+      // })
+    }
   }
 
   addList = e => {
@@ -142,13 +150,13 @@ class TodoList extends Component {
           <Button type="submit" onClick={this.addList} value="add" />
           {lists.map(list => {
             return (
-              <List key={list.id} checked={this.state.isChecked ? true : false}>
-                <Label>
-                  <CheckBox
-                    id="todo"
-                    type="checkbox"
-                    onChange={this.handleCheck}
-                  />
+              <List key={list.id}>
+                {/*如何获取当前点击的 label，参数 e 可获取 CheckBox 的 checked 值， list 参数获取档期点击的 label*/}
+                <Label
+                  onClick={e => this.handleCheck(list, e.target.checked)}
+                  isDone={list.done}
+                >
+                  <CheckBox id="todo" type="checkbox" />
                   <Span>{list.text}</Span>
                 </Label>
               </List>
