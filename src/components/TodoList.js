@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import TodoItem from './TodoItem'
+import _ from 'lodash'
 
 //收集用户输入的信息需用 form 标签
 const Container = styled.form`
@@ -9,13 +11,19 @@ const Container = styled.form`
   padding-top: 16px;
 `
 
+const InputContainer = styled.div`
+  margin: 0 auto 22px auto;
+  width: 488px;
+  height: 48px;
+  position: relative;
+`
+
 const Input = styled.input`
-  width: ${453 - 28}px;
+  width: 458px;
   height: 48px;
   background: white;
   border-radius: 4px;
-  margin: 0 16px 22px 16px;
-  border: none;
+  border: 1px solid #e0e2e7;
   padding: 0 14px;
   color: #676e78;
   font-size: 14px;
@@ -29,24 +37,6 @@ const Input = styled.input`
   }
 `
 
-const TodoContent = styled.ol`
-  width: 488px;
-  margin: 0 auto;
-  background: #f9f9f9;
-  padding: 16px 0;
-  list-style: none;
-  position: relative;
-`
-const List = styled.li`
-  background: #ffffff;
-  width: ${453 - 28}px;
-  min-height: ${48 - 28}px;
-  border-radius: 4px;
-  margin: 10px auto;
-  padding: 14px;
-  font-size: 14px;
-`
-
 const Button = styled.input`
   background: #2d58dd;
   padding: 6px 10px;
@@ -58,8 +48,8 @@ const Button = styled.input`
   font-weight: 600;
   box-shadow: 0 2px 4px 0 rgba(45, 193, 221, 0.5);
   position: absolute;
-  top: 26px;
-  right: 32px;
+  top: 10px;
+  right: 10px;
   outline: none;
 
   &:hover {
@@ -67,47 +57,21 @@ const Button = styled.input`
   }
 `
 
-const Label = styled.label`
-  color: ${props => (props.isDone ? 'blue' : '#676e78')};
-`
-
-const CheckBox = styled.input``
-
-const Span = styled.span`
-  padding-left: 8px;
-  color: ${props => (props.changeTextStyle ? 'green' : '')};
-`
-
 class TodoList extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      marked: false,
       lists: [
-        { id: 1, text: 'list1', done: false },
-        { id: 2, text: 'list2', done: false },
-        { id: 3, text: 'list3', done: false },
+        { text: 'list1', done: false },
+        { text: 'list2', done: true },
+        { text: 'list3', done: false },
       ],
-      count: 3,
     }
   }
 
   preventFormRefresh = e => {
     e.preventDefault()
-  }
-
-  handleCheck = (list, isChecked) => {
-    //const eventChecked = e.target.checked
-    if (isChecked) {
-      console.log('checkbox is true', 'text' + list.text)
-      console.log('activeLi:', this.state.activeLi)
-      // this.setState({
-      //   lists: [
-      //     { id: 1, text: 'list1', done: isChecked },
-      //     { id: 2, text: 'list2', done: isChecked },
-      //     { id: 3, text: 'list3', done: isChecked },
-      //   ],
-      // })
-    }
   }
 
   addList = e => {
@@ -118,18 +82,24 @@ class TodoList extends Component {
       this.setState({
         lists: [
           ...this.state.lists,
-          { id: (this.state.count += 1), text: newList },
+          { text: newList, done: this.state.marked },
         ],
       })
     }
-
     //清空 input 的值
     this.inputValue.reset()
   }
 
+  checkedChange = index => {
+    //克隆 state 中的 list
+    let list = _.cloneDeep(this.state.lists)
+    //点击该 list 可获取 index（知道是哪个 list），使得 index.done 取反
+    list[index].done = !list[index].done
+    //完成后重设 state 中的 lists
+    this.setState({ lists: list })
+  }
+
   render() {
-    const { lists } = this.state
-    //console.log('state:', lists)
     return (
       <Container
         //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
@@ -139,7 +109,7 @@ class TodoList extends Component {
           this.inputValue = input
         }}
       >
-        <TodoContent>
+        <InputContainer>
           <Input
             //获取 input 的值
             ref={input => {
@@ -148,21 +118,8 @@ class TodoList extends Component {
             placeholder="把要做的事情写下来"
           />
           <Button type="submit" onClick={this.addList} value="add" />
-          {lists.map(list => {
-            return (
-              <List key={list.id}>
-                {/*如何获取当前点击的 label，参数 e 可获取 CheckBox 的 checked 值， list 参数获取档期点击的 label*/}
-                <Label
-                  onClick={e => this.handleCheck(list, e.target.checked)}
-                  isDone={list.done}
-                >
-                  <CheckBox id="todo" type="checkbox" />
-                  <Span>{list.text}</Span>
-                </Label>
-              </List>
-            )
-          })}
-        </TodoContent>
+        </InputContainer>
+        <TodoItem lists={this.state.lists} checkedChange={this.checkedChange} />
       </Container>
     )
   }
