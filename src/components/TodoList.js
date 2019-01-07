@@ -14,22 +14,26 @@ const Container = styled.form`
 const InputContainer = styled.div`
   margin: 0 auto 22px auto;
   width: 488px;
-  height: 48px;
+  height: ${48 + 32}px;
+  background: #f9f9f9;
   position: relative;
 `
 
 const Input = styled.input`
-  width: 458px;
+  width: ${453 - 26}px;
   height: 48px;
   background: white;
   border-radius: 4px;
-  border: 1px solid #e0e2e7;
+  border: none;
   padding: 0 14px;
   color: #676e78;
   font-size: 14px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.08);
   outline-color: #2d58dd;
   outline-width: 2px;
+  position: absolute;
+  top: 16px;
+  left: 16px;
 
   &::placeholder {
     font-size: 14px;
@@ -48,24 +52,28 @@ const Button = styled.input`
   font-weight: 600;
   box-shadow: 0 2px 4px 0 rgba(45, 193, 221, 0.5);
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 26px;
+  right: 26px;
   outline: none;
+  transition: 0.8s cubic-bezier(0.2, 0.82, 0.2, 1);
 
   &:hover {
     cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(45, 193, 221, 0.5);
+    transform: translateY(-3px);
   }
 `
 
-class TodoList extends Component {
+class Todo extends Component {
   constructor(props) {
     super(props)
     this.state = {
       marked: false,
+      count: 2,
       lists: [
-        { text: 'list1', done: false },
-        { text: 'list2', done: true },
-        { text: 'list3', done: false },
+        { id: 0, text: '学习 HTML', done: false },
+        { id: 1, text: '学习 CSS', done: false },
+        { id: 2, text: '学习 JavaScript', done: false },
       ],
     }
   }
@@ -77,12 +85,15 @@ class TodoList extends Component {
   addList = e => {
     //把 input 的值赋给 newList
     const newList = this.newList.value
-    //使用 state 中的 count 计算 ID，使其每次 +1
     if (newList !== '') {
       this.setState({
         lists: [
           ...this.state.lists,
-          { text: newList, done: this.state.marked },
+          {
+            id: (this.state.count += 1),
+            text: newList,
+            done: this.state.marked,
+          },
         ],
       })
     }
@@ -93,10 +104,16 @@ class TodoList extends Component {
   checkedChange = index => {
     //克隆 state 中的 list
     let list = _.cloneDeep(this.state.lists)
-    //点击该 list 可获取 index（知道是哪个 list），使得 index.done 取反
+    //从子组件 index（知道是哪个 list），使得 index.done 取反
     list[index].done = !list[index].done
     //完成后重设 state 中的 lists
     this.setState({ lists: list })
+  }
+
+  removeTodo = id => {
+    this.setState({
+      lists: this.state.lists.filter(li => li.id !== id),
+    })
   }
 
   render() {
@@ -119,10 +136,14 @@ class TodoList extends Component {
           />
           <Button type="submit" onClick={this.addList} value="add" />
         </InputContainer>
-        <TodoItem lists={this.state.lists} checkedChange={this.checkedChange} />
+        <TodoItem
+          lists={this.state.lists}
+          checkedChange={this.checkedChange}
+          remove={this.removeTodo}
+        />
       </Container>
     )
   }
 }
 
-export default TodoList
+export default Todo

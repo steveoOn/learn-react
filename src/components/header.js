@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import TabGroup from './TabGroup'
 import { Bell } from 'react-feather'
-import TodoList from './TodoList'
+import Todo from './TodoList'
 
 const NavContainer = styled.div`
   display: fixed;
@@ -32,7 +32,7 @@ class Header extends React.Component {
       <NavContainer>
         <TabGroup>
           <Label label="tab1">
-            <TodoList />
+            <Todo />
           </Label>
           <Label label="tab2" paddingLR="46px">
             hi louie
