@@ -72,7 +72,7 @@ class Todo extends Component {
       count: 2,
       lists: [
         { id: 0, text: '学习 HTML', done: false },
-        { id: 1, text: '学习 CSS', done: false },
+        { id: 1, text: '学习 CSS', done: true },
         { id: 2, text: '学习 JavaScript', done: false },
       ],
     }
@@ -82,7 +82,7 @@ class Todo extends Component {
     e.preventDefault()
   }
 
-  addList = e => {
+  addList = () => {
     //把 input 的值赋给 newList
     const newList = this.newList.value
     if (newList !== '') {
@@ -99,13 +99,14 @@ class Todo extends Component {
     }
     //清空 input 的值
     this.inputValue.reset()
+    console.log('length:', this.state.lists.length)
   }
 
-  checkedChange = index => {
+  checkedChange = (index, isDone) => {
     //克隆 state 中的 list
     let list = _.cloneDeep(this.state.lists)
-    //从子组件 index（知道是哪个 list），使得 index.done 取反
-    list[index].done = !list[index].done
+    //获取子组件 index（知道是哪个 list），同时获取子组件 CheckBox 的 checked 值（isDone），判断并设置 lists[index].done 的值
+    isDone ? (list[index].done = true) : (list[index].done = false)
     //完成后重设 state 中的 lists
     this.setState({ lists: list })
   }
