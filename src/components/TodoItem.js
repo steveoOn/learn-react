@@ -84,16 +84,16 @@ class TodoItem extends Component {
         <List key={index}>
           {/*如何获取当前点击的 item，参数 e.target.checked 可获取 CheckBox 的 checked 值*/}
           <Label
-            //通过点击事件获取当前点击 list 的 index 值, 删除 event 箭头函数会报错
-            onChange={event => this.onClickDone(index, event.target.checked)}
             //使单个 list 通过判断 markDone 的值改变其样式
             markDone={list.done}
           >
             <CheckBox
               id="todo"
               type="checkbox"
+              //通过点击事件获取当前点击 list 的 index 值, 删除 event 箭头函数会报错
+              onChange={event => this.onClickDone(index, event.target.checked)}
               //使用 defaultChecked 属性防止添加新 list 后重置 CheckBox 的 checked 值
-              defaultChecked={list.done}
+              checked={list.done}
             />
             <Span>{list.text}</Span>
           </Label>

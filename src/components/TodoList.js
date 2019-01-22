@@ -76,7 +76,7 @@ class Todo extends Component {
         { id: 1, text: '学习 CSS', done: false },
         { id: 2, text: '学习 JavaScript', done: false },
       ],
-      doneList: [],
+      doneLists: [],
     }
   }
 
@@ -110,18 +110,13 @@ class Todo extends Component {
     //获取子组件 index（知道是哪个 list），同时获取子组件 CheckBox 的 checked 值（isDone），判断并设置 lists[index].done 的值
     if (isDone) {
       list[index].done = true
-      this.setState({
-        doneList: list.filter(li => li.done == true),
-        lists: list.filter(li => li.done == false),
-      })
     } else {
       list[index].done = false
-      // this.setState({
-      //   doneList: list.filter(li => li.done == false),
-      //   lists: list.filter(li => li.done == true),
-      // })
     }
-    //完成后重设 state 中的 lists
+    this.setState({
+      lists: list,
+      doneLists: list.filter(li => li.done == true),
+    })
   }
 
   removeTodo = id => {
@@ -148,7 +143,7 @@ class Todo extends Component {
           remove={this.removeTodo}
         />
         <TodoItem
-          lists={this.state.doneList}
+          lists={this.state.doneLists}
           checkedChange={this.checkedChange}
           remove={this.removeTodo}
         />
