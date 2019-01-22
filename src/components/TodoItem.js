@@ -79,34 +79,34 @@ class TodoItem extends Component {
   }
 
   render() {
-    return (
-      <TodoOl>
-        {this.props.lists.map((list, index) => {
-          return (
-            <List key={index}>
-              {/*如何获取当前点击的 item，参数 e.target.checked 可获取 CheckBox 的 checked 值*/}
-              <Label
-                //通过点击事件获取当前点击 list 的 index 值, 删除 event 箭头函数会报错
-                onClick={event => this.onClickDone(index, event.target.checked)}
-                //使单个 list 通过判断 markDone 的值改变其样式
-                markDone={list.done}
-              >
-                <CheckBox
-                  id="todo"
-                  type="checkbox"
-                  //使用 defaultChecked 属性防止添加新 list 后重置 CheckBox 的 checked 值
-                  defaultChecked={list.done}
-                />
-                <Span>{list.text}</Span>
-              </Label>
-              <ButtonDelete onClick={event => this.clickTodo(list.id)}>
-                <Trash2 size={15} />
-              </ButtonDelete>
-            </List>
-          )
-        })}
-      </TodoOl>
-    )
+    const hasLists = this.props.lists.map((list, index) => {
+      return (
+        <List key={index}>
+          {/*如何获取当前点击的 item，参数 e.target.checked 可获取 CheckBox 的 checked 值*/}
+          <Label
+            //通过点击事件获取当前点击 list 的 index 值, 删除 event 箭头函数会报错
+            onChange={event => this.onClickDone(index, event.target.checked)}
+            //使单个 list 通过判断 markDone 的值改变其样式
+            markDone={list.done}
+          >
+            <CheckBox
+              id="todo"
+              type="checkbox"
+              //使用 defaultChecked 属性防止添加新 list 后重置 CheckBox 的 checked 值
+              defaultChecked={list.done}
+            />
+            <Span>{list.text}</Span>
+          </Label>
+          <ButtonDelete onClick={event => this.clickTodo(list.id)}>
+            <Trash2 size={15} />
+          </ButtonDelete>
+        </List>
+      )
+    })
+
+    const noLists = <List>暂无事项</List>
+
+    return <TodoOl>{this.props.lists.length == 0 ? noLists : hasLists}</TodoOl>
   }
 }
 

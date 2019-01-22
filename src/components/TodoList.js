@@ -4,7 +4,7 @@ import TodoItem from './TodoItem'
 import _ from 'lodash'
 
 //收集用户输入的信息需用 form 标签
-const Container = styled.form`
+const Form = styled.form`
   background: none;
   width: 1024px;
   height: auto;
@@ -70,45 +70,58 @@ class Todo extends Component {
     this.state = {
       marked: false,
       count: 2,
+      newList: '',
       lists: [
         { id: 0, text: '学习 HTML', done: false },
-        { id: 1, text: '学习 CSS', done: true },
+        { id: 1, text: '学习 CSS', done: false },
         { id: 2, text: '学习 JavaScript', done: false },
       ],
+      doneList: [],
     }
   }
 
-  preventFormRefresh = e => {
-    e.preventDefault()
-  }
-
-  addList = () => {
-    //把 input 的值赋给 newList
-    const newList = this.newList.value
-    if (newList !== '') {
+  onSubmit = event => {
+    //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
+    event.preventDefault()
+    if (this.state.newList !== '') {
       this.setState({
         lists: [
           ...this.state.lists,
           {
             id: (this.state.count += 1),
-            text: newList,
+            text: this.state.newList,
             done: this.state.marked,
           },
         ],
+        newList: '',
       })
     }
-    //清空 input 的值
-    this.inputValue.reset()
-    console.log('length:', this.state.lists.length)
+  }
+
+  getInputValue = event => {
+    this.setState({
+      newList: event.target.value,
+    })
   }
 
   checkedChange = (index, isDone) => {
     //克隆 state 中的 list
     let list = _.cloneDeep(this.state.lists)
     //获取子组件 index（知道是哪个 list），同时获取子组件 CheckBox 的 checked 值（isDone），判断并设置 lists[index].done 的值
-    isDone ? (list[index].done = true) : (list[index].done = false)
+    if (isDone) {
+      list[index].done = true
+      this.setState({
+        doneList: list.filter(li => li.done == true),
+        lists: list.filter(li => li.done == false),
+      })
+    } else {
+      list[index].done = false
+      // this.setState({
+      //   doneList: list.filter(li => li.done == false),
+      //   lists: list.filter(li => li.done == true),
+      // })
+    }
     //完成后重设 state 中的 lists
-    this.setState({ lists: list })
   }
 
   removeTodo = id => {
@@ -119,30 +132,27 @@ class Todo extends Component {
 
   render() {
     return (
-      <Container
-        //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
-        onSubmit={this.preventFormRefresh}
-        //得到 form 中的 input 值
-        ref={input => {
-          this.inputValue = input
-        }}
-      >
+      <Form onSubmit={this.onSubmit}>
         <InputContainer>
           <Input
-            //获取 input 的值
-            ref={input => {
-              this.newList = input
-            }}
+            //获取 input 的值并显示在 input 中
+            value={this.state.newList}
+            onChange={this.getInputValue}
             placeholder="把要做的事情写下来"
           />
-          <Button type="submit" onClick={this.addList} value="add" />
+          <Button type="submit" value="add" />
         </InputContainer>
         <TodoItem
           lists={this.state.lists}
           checkedChange={this.checkedChange}
           remove={this.removeTodo}
         />
-      </Container>
+        <TodoItem
+          lists={this.state.doneList}
+          checkedChange={this.checkedChange}
+          remove={this.removeTodo}
+        />
+      </Form>
     )
   }
 }
