@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import TodoItem from './TodoItem'
+import EmptyContent from './TodoItemEmpty'
 import _ from 'lodash'
 
 //收集用户输入的信息需用 form 标签
@@ -84,17 +85,18 @@ class Todo extends Component {
     //使用 preventDefault 方法防止 form 标签默认的 submit 提交后的刷新事件
     event.preventDefault()
     if (this.state.newList !== '') {
-      this.setState({
+      //使用函数表达式带参数的方式修改 ID，否则会提示警告：不能直接修改 state 的状态
+      this.setState(state => ({
         lists: [
           ...this.state.lists,
           {
-            id: (this.state.count += 1),
+            id: (state.count += 1),
             text: this.state.newList,
             done: this.state.marked,
           },
         ],
         newList: '',
-      })
+      }))
     }
   }
 
@@ -105,27 +107,67 @@ class Todo extends Component {
   }
 
   checkedChange = (index, isDone) => {
-    //克隆 state 中的 list
-    let list = _.cloneDeep(this.state.lists)
-    //获取子组件 index（知道是哪个 list），同时获取子组件 CheckBox 的 checked 值（isDone），判断并设置 lists[index].done 的值
     if (isDone) {
+      //克隆 state 中的 list
+      let list = _.cloneDeep(this.state.lists)
+      //获取子组件 index（知道是哪个 list），同时获取子组件 CheckBox 的 checked 值（isDone），判断并设置 lists[index].done 的值
       list[index].done = true
+
+      let donelist = list.filter(li => li.done === true)
+      let unDonelist = list.filter(li => li.done === false)
+
+      this.setState({
+        //donelist 一定要使用`...`展开，累加 doneList 需要添加并展开 state.doneList
+        doneLists: [...this.state.doneLists, ...donelist],
+        lists: unDonelist,
+      })
     } else {
-      list[index].done = false
+      // console.log('list done is:', this.state.doneLists[index].done)
+      let cloneDonelist = _.cloneDeep(this.state.doneLists)
+      cloneDonelist[index].done = false
+
+      let donelist = cloneDonelist.filter(li => li.done === true)
+      let unDonelist = cloneDonelist.filter(li => li.done === false)
+
+      this.setState({
+        doneLists: donelist,
+        lists: [...this.state.lists, ...unDonelist],
+      })
     }
-    this.setState({
-      lists: list,
-      doneLists: list.filter(li => li.done == true),
-    })
   }
 
   removeTodo = id => {
     this.setState({
       lists: this.state.lists.filter(li => li.id !== id),
+      doneLists: this.state.doneLists.filter(li => li.id !== id),
     })
   }
 
   render() {
+    const isDoneListEmpty =
+      this.state.doneLists.length === 0 ? (
+        <EmptyContent emptyText="今天做点什么呢？" />
+      ) : (
+        <TodoItem
+          lists={this.state.doneLists}
+          checkedChange={this.checkedChange}
+          remove={this.removeTodo}
+          title="完成事项🤓"
+        />
+      )
+
+    const isListEmpty =
+      this.state.lists.length === 0 ? (
+        <EmptyContent emptyText="今天做点什么呢？" />
+      ) : (
+        <TodoItem
+          lists={this.state.lists}
+          checkedChange={this.checkedChange}
+          remove={this.removeTodo}
+          title="待办事项🤔"
+        />
+      )
+
     return (
       <Form onSubmit={this.onSubmit}>
         <InputContainer>
@@ -137,16 +179,8 @@ class Todo extends Component {
           />
           <Button type="submit" value="add" />
         </InputContainer>
-        <TodoItem
-          lists={this.state.lists}
-          checkedChange={this.checkedChange}
-          remove={this.removeTodo}
-        />
-        <TodoItem
-          lists={this.state.doneLists}
-          checkedChange={this.checkedChange}
-          remove={this.removeTodo}
-        />
+        {isListEmpty}
+        {isDoneListEmpty}
       </Form>
     )
   }
