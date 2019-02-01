@@ -36,7 +36,9 @@ class Header extends React.Component {
             <Todo />
           </Label>
           <Label label="tab2" paddingLR="46px">
-            <Fold />
+            <Fold>
+              <h1>siwen</h1>
+            </Fold>
           </Label>
           <Label label="tab3">oh no</Label>
           <Label label="tab4">oh yes</Label>
