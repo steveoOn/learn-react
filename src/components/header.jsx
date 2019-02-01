@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import TabGroup from './TabGroup'
 import { Bell } from 'react-feather'
 import Todo from './TodoList'
+import Fold from './Fold'
 
 const NavContainer = styled.div`
   display: fixed;
@@ -35,7 +36,7 @@ class Header extends React.Component {
             <Todo />
           </Label>
           <Label label="tab2" paddingLR="46px">
-            hi louie
+            <Fold />
           </Label>
           <Label label="tab3">oh no</Label>
           <Label label="tab4">oh yes</Label>
