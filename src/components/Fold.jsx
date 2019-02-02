@@ -4,7 +4,22 @@ import PropTypes from 'prop-types'
 
 const Button = styled.button`
   outline: none;
+  color: ${props => props.textColor || '#5a7be0'};
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: 0.8s cubic-bezier(0.2, 0.82, 0.2, 1);
+  height: 21px;
+
+  &:hover {
+    background: #e5eafa;
+    cursor: pointer;
+  }
 `
+
+const FoldWrap = styled.div``
 
 class Fold extends React.Component {
   static propTypes = {
@@ -35,10 +50,12 @@ class Fold extends React.Component {
     const showChildren = isFolded ? undefined : this.props.children
 
     return (
-      <div>
-        <Button onClick={this.handleFold}>{isFolded ? '展开' : '折叠'}</Button>
+      <FoldWrap>
+        <Button onClick={this.handleFold} textColor={this.props.textColor}>
+          {isFolded ? '展开' : '折叠'}
+        </Button>
         {showChildren}
-      </div>
+      </FoldWrap>
     )
   }
 }

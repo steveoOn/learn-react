@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Trash2 } from 'react-feather'
+import Fold from './Fold'
 
 const Field = styled.fieldset`
   width: 488px;
@@ -92,33 +93,35 @@ class TodoItem extends Component {
     return (
       <Field>
         <FieldTitle>{this.props.title}</FieldTitle>
-        <TodoOl>
-          {this.props.lists.map((list, index) => {
-            return (
-              <List key={index}>
-                <Label
-                  //使单个 list 通过判断 markDone 的值改变其样式
-                  markDone={list.done}
-                >
-                  <CheckBox
-                    id="todo"
-                    type="checkbox"
-                    //通过点击事件获取当前点击 list 的 index 值, event.target.checked 获取当前 CheckBox 勾选状态
-                    onChange={event =>
-                      this.onClickDone(index, event.target.checked)
-                    }
-                    //通过 list.done 控制 checked 的值
-                    checked={list.done}
-                  />
-                  <Span>{list.text}</Span>
-                </Label>
-                <ButtonDelete onClick={event => this.clickTodo(list.id)}>
-                  <Trash2 size={15} />
-                </ButtonDelete>
-              </List>
-            )
-          })}
-        </TodoOl>
+        <Fold>
+          <TodoOl>
+            {this.props.lists.map((list, index) => {
+              return (
+                <List key={index}>
+                  <Label
+                    //使单个 list 通过判断 markDone 的值改变其样式
+                    markDone={list.done}
+                  >
+                    <CheckBox
+                      id="todo"
+                      type="checkbox"
+                      //通过点击事件获取当前点击 list 的 index 值, event.target.checked 获取当前 CheckBox 勾选状态
+                      onChange={event =>
+                        this.onClickDone(index, event.target.checked)
+                      }
+                      //通过 list.done 控制 checked 的值
+                      checked={list.done}
+                    />
+                    <Span>{list.text}</Span>
+                  </Label>
+                  <ButtonDelete onClick={event => this.clickTodo(list.id)}>
+                    <Trash2 size={15} />
+                  </ButtonDelete>
+                </List>
+              )
+            })}
+          </TodoOl>
+        </Fold>
       </Field>
     )
   }
