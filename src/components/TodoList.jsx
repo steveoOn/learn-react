@@ -42,7 +42,7 @@ const Input = styled.input`
   }
 `
 
-const Button = styled.input`
+const Button = styled.button`
   background: #2d58dd;
   padding: 6px 10px;
   color: white;
@@ -177,7 +177,7 @@ class Todo extends Component {
             onChange={this.getInputValue}
             placeholder="把要做的事情写下来"
           />
-          <Button type="submit" value="add" />
+          <Button>add</Button>
         </InputContainer>
         {isListEmpty}
         {isDoneListEmpty}
