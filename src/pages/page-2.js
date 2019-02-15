@@ -1,15 +1,25 @@
 import React from 'react'
-import { Link } from 'gatsby'
-
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import TabGroup from '../components/TabGroup'
+import Todo from '../components/TodoList'
+import Fold from '../components/Fold'
 
 const SecondPage = () => (
   <Layout>
     <SEO title="Page two" />
-    <h1>Hi from the second page</h1>
-    <p>Welcome to page 2</p>
-    <Link to="/">Go back to the homepage</Link>
+    <TabGroup>
+      <label label="tab1">
+        <Todo />
+      </label>
+      <label label="tab2" paddingLR={0}>
+        <Fold>
+          <h1>siwen</h1>
+        </Fold>
+      </label>
+      <label label="tab3">oh no</label>
+      <label label="tab4">oh yes</label>
+    </TabGroup>
   </Layout>
 )
 

@@ -1,12 +1,9 @@
 import React from 'react'
-//导入默认值（styled）和单独模块（css）
 import styled from 'styled-components'
-import TabGroup from './TabGroup'
 import { Bell } from 'react-feather'
-import Todo from './TodoList'
-import Fold from './Fold'
+import { Link } from 'gatsby'
 
-const NavContainer = styled.div`
+const NavContainer = styled.header`
   display: fixed;
   width: 100%;
   height: 48px;
@@ -27,28 +24,42 @@ const StyledSvg = styled.button`
   top: 6px;
 `
 
-class Header extends React.Component {
-  render() {
-    return (
-      <NavContainer>
-        <TabGroup>
-          <Label label="tab1">
-            <Todo />
-          </Label>
-          <Label label="tab2" paddingLR="46px">
-            <Fold>
-              <h1>siwen</h1>
-            </Fold>
-          </Label>
-          <Label label="tab3">oh no</Label>
-          <Label label="tab4">oh yes</Label>
-        </TabGroup>
-        <StyledSvg>
-          <Bell color="white" />
-        </StyledSvg>
-      </NavContainer>
-    )
-  }
+const H = styled.h4`
+  padding: 0 10px;
+`
+const SH = styled.h5`
+  padding: 0 8px;
+  background: ${props => (props.actived ? 'white' : '#7dce16')};
+  height: 34px;
+  margin: 14px 2px;
+  display: flex;
+  align-items: center;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+`
+const StyleLink = styled(Link)`
+  color: white;
+  text-decoration: none;
+`
+
+const Header = props => {
+  return (
+    <NavContainer>
+      <H>
+        <StyleLink to="/">{props.siteTitle}</StyleLink>
+      </H>
+      <SH>
+        <StyleLink to="/page-2/">Page2</StyleLink>
+      </SH>
+      <SH>
+        <StyleLink to="/page-3/">Page3</StyleLink>
+      </SH>
+      {/* */}
+      <StyledSvg>
+        <Bell color="white" />
+      </StyledSvg>
+    </NavContainer>
+  )
 }
 
 export default Header

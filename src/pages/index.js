@@ -1,22 +1,19 @@
 import React from 'react'
-import { Link } from 'gatsby'
-import styled from 'styled-components'
+import Layout from '../components/layout'
 
 import SEO from '../components/seo'
-import Header from '../components/header'
 import DropdownNotice from '../components/DropdownNotice'
 
-const Body = styled.div`
-  background: transparent;
-  margin: 0;
-`
+// const Body = styled.div`
+//   background: transparent;
+//   margin: 0;
+// `
 
 const IndexPage = () => (
-  <Body>
+  <Layout>
     <SEO title="Home" keywords={['gatsby', 'application', 'react']} />
-    <Header />
-    {/* <DropdownNotice /> */}
-  </Body>
+    <DropdownNotice />
+  </Layout>
 )
 
 export default IndexPage
