@@ -7,6 +7,7 @@ const OL = styled.ol`
   display: flex;
   margin: 0;
   padding: 0;
+  width: 100%;
 `
 
 function childrenToArray(propChildren) {

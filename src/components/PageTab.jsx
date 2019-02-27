@@ -6,20 +6,28 @@ import isActiveLink from './ActiveLink'
 const PageTabLi = styled.li`
   list-style: none;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `
 const StyleLink = styled(isActiveLink)`
   text-decoration: none;
-  background: #7dce16;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  margin-right: 2px;
-  padding: 8px;
+  border-radius: 2px;
+  margin-right: 8px;
+  padding: 12px;
   color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
 
   &.active {
-    background: white;
-    color: #333;
+    background: #7dce16;
+
+    &:hover {
+      background: #82d416;
+    }
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 `
 

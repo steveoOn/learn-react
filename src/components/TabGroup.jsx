@@ -12,7 +12,7 @@ const TabList = styled.ol`
   ${props =>
     props.center &&
     css`
-      margin-left: 25%;
+      margin-left: 33%;
     `}
 `
 

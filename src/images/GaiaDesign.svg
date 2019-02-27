@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 90 90" style="enable-background:new 0 0 90 90;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#F8F8F8;}
+	.st1{fill:url(#SVGID_1_);}
+	.st2{clip-path:url(#XMLID_3_);fill:url(#SVGID_2_);}
+</style>
+<circle class="st0" cx="44.7" cy="45.1" r="45"/>
+<g>
+	<linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="65.5386" y1="67.5496" x2="14.3222" y2="22.3266">
+		<stop  offset="0" style="stop-color:#008A79"/>
+		<stop  offset="1" style="stop-color:#00BE63"/>
+	</linearGradient>
+	<path class="st1" d="M42.1,17.5H28.6c-2.2,0-3.9,1.7-3.9,3.9v48.1c0,0,2.3-13.5,12.7-19.9V35c0-1.4,1.1-2.5,2.5-2.5h4.3
+		c4.5,0,8.3,2.9,9.7,7c0.3,1,0.5,2.1,0.5,3.2c0,0.9-0.1,1.9-0.4,2.7c6.5-1.8,10.5-5.8,12.8-10.1C63.4,25,53.6,17.5,42.1,17.5z"/>
+	<g>
+		<defs>
+			<path id="XMLID_22_" d="M50.5,42c-21.7,1.3-25.8,27.5-25.8,27.5h19.2c15.8,0,28.7-13.9,28.7-30.9v0c0-3.4-0.5-6.7-1.5-9.7
+				C67.9,35.4,61.5,41.4,50.5,42z"/>
+		</defs>
+		<linearGradient id="XMLID_2_" gradientUnits="userSpaceOnUse" x1="57.3361" y1="49.2429" x2="20.3541" y2="51.4904">
+			<stop  offset="0" style="stop-color:#00E853"/>
+			<stop  offset="1" style="stop-color:#00BE63"/>
+		</linearGradient>
+		<use xlink:href="#XMLID_22_"  style="overflow:visible;fill:url(#XMLID_2_);"/>
+		<clipPath id="XMLID_3_">
+			<use xlink:href="#XMLID_22_"  style="overflow:visible;"/>
+		</clipPath>
+		<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="71.2696" y1="61.3761" x2="42.869" y2="46.665">
+			<stop  offset="0" style="stop-color:#008A79"/>
+			<stop  offset="1" style="stop-color:#00BE63"/>
+		</linearGradient>
+		<path class="st2" d="M21.1,75.4l3.6-5.8c0,0,6.6-10.6,24-13.7c17.7-3.2,21.8-23.6,22.4-27c0.6-3.5,6.7-4.1,6.7-4.1l6.8,15.7
+			l-1.7,21.2l-8.3,14.1l-36.2,2.7L21.1,75.4z"/>
+	</g>
+</g>
+</svg>
