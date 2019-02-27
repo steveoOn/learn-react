@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
@@ -14,32 +14,31 @@ const Title = styled.h1`
   margin: 14px;
 `
 
-class TodayNoteContent extends Component {
-  static propTypes = {
-    //子元素的类型可以是 React 组件或数组
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
-  }
+const TodayNoteContent = props => {
+  return (
+    <TodayContent>
+      <Title>今天</Title>
+      {React.Children.toArray(props.children).map(child => {
+        const { isNew, text, isNote, barTitle, date, time } = child.props
+        return (
+          <NoteCard
+            isNew={isNew}
+            text={text}
+            key={text}
+            isNote={isNote}
+            barTitle={barTitle}
+            date={date}
+            time={time}
+          />
+        )
+      })}
+    </TodayContent>
+  )
+}
 
-  render() {
-    return (
-      <TodayContent>
-        <Title>今天</Title>
-        {React.Children.toArray(this.props.children).map(child => {
-          const { isNew, text, isNote, barTitle, id } = child.props
-          return (
-            <NoteCard
-              isNew={isNew}
-              text={text}
-              key={text}
-              isNote={isNote}
-              barTitle={barTitle}
-              id={id}
-            />
-          )
-        })}
-      </TodayContent>
-    )
-  }
+TodayNoteContent.propTypes = {
+  //子元素的类型可以是 React 组件或数组
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
 }
 
 export default TodayNoteContent

@@ -9,16 +9,20 @@ const SecondPage = () => (
   <Layout>
     <SEO title="Page two" />
     <TabGroup>
-      <label label="tab1">
+      <label label="tab1" secondary>
         <Todo />
       </label>
-      <label label="tab2" paddingLR={0}>
+      <label label="tab2" paddingLR={0} secondary>
         <Fold>
           <h1>siwen</h1>
         </Fold>
       </label>
-      <label label="tab3">oh no</label>
-      <label label="tab4">oh yes</label>
+      <label label="tab3" secondary>
+        oh no
+      </label>
+      <label label="tab4" secondary>
+        oh yes
+      </label>
     </TabGroup>
   </Layout>
 )

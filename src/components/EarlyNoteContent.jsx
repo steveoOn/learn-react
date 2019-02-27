@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
@@ -14,31 +14,31 @@ const Title = styled.h1`
   margin: 14px;
 `
 
-class EarlyNoteContent extends Component {
-  static propTypes = {
-    //子元素的类型可以是 React 组件或数组
-    children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
-  }
+const EarlyNoteContent = props => {
+  return (
+    <EarlyContent>
+      <Title>稍早</Title>
+      {React.Children.toArray(props.children).map(child => {
+        const { isNew, text, isNote, barTitle, date, time } = child.props
+        return (
+          <NoteCard
+            isNew={isNew}
+            text={text}
+            key={text}
+            isNote={isNote}
+            barTitle={barTitle}
+            date={date}
+            time={time}
+          />
+        )
+      })}
+    </EarlyContent>
+  )
+}
 
-  render() {
-    return (
-      <EarlyContent>
-        <Title>稍早</Title>
-        {React.Children.toArray(this.props.children).map(child => {
-          const { isNew, text, isNote, barTitle } = child.props
-          return (
-            <NoteCard
-              isNew={isNew}
-              text={text}
-              key={text}
-              isNote={isNote}
-              barTitle={barTitle}
-            />
-          )
-        })}
-      </EarlyContent>
-    )
-  }
+EarlyNoteContent.propTypes = {
+  //子元素的类型可以是 React 组件或数组
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element]),
 }
 
 export default EarlyNoteContent

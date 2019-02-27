@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
 import { Bell, X } from 'react-feather'
@@ -35,15 +35,12 @@ const TextContent = styled.p`
 `
 
 const Left = styled.div`
-  display: grid;
+  display: flex;
   height: 30px;
-  grid-template-columns: 0.2fr 0.6fr 1fr;
-  grid-column-gap: 8px;
   align-items: center;
 `
 
 const Right = styled(Left)`
-  grid-template-columns: 68px 52px;
   justify-self: end;
 
   ${CardContainer}:hover & {
@@ -56,24 +53,25 @@ const Date = styled.p`
   font-weight: 400;
   color: rgba(187, 187, 187, 1);
   margin: 0;
+  padding: 0 2px;
 `
 const Time = styled(Date)``
 
-const IconNote = styled.button`
+const IconNote = styled.div`
   width: 14px;
   height: 14px;
-  padding: 0;
   position: relative;
-  border: none;
-  background: transparent;
-  outline: none;
 `
-const IconClose = styled(IconNote)`
-  position: absolute;
-  top: ${(30 - 14) / 2}px;
-  right: 8px;
+const CloseButton = styled.button`
   display: none;
   border-radius: 3px;
+  outline: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  justify-self: flex-end;
+  align-self: center;
 
   ${CardContainer}:hover & {
     display: initial;
@@ -85,7 +83,7 @@ const BarTitle = styled.h4`
   font-size: 12px;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
-  margin: 0;
+  margin: 0 4px;
 `
 
 const Badge = styled.div`
@@ -119,43 +117,37 @@ const Tag = styled.div`
     `};
 `
 
-class NoteCard extends Component {
-  static propTypes = {
-    text: PropTypes.string.isRequired,
-    isNew: PropTypes.bool,
-    barTitle: PropTypes.string,
-  }
+const NoteCard = props => {
+  return (
+    <CardContainer id={props.id}>
+      <TopBar>
+        <Left>
+          <IconNote>
+            <Bell color="#999" size={14} />
+            <Badge isNew={props.isNew} />
+          </IconNote>
+          <BarTitle>{props.barTitle}</BarTitle>
+          <Tag normal isNote={props.isNote}>
+            待审批
+          </Tag>
+        </Left>
+        <Right>
+          <Date>{props.date}</Date>
+          <Time>{props.time}</Time>
+        </Right>
+        <CloseButton>
+          <X color="#999" size={14} />
+        </CloseButton>
+      </TopBar>
+      <TextContent>{props.text}</TextContent>
+    </CardContainer>
+  )
+}
 
-  removeNoteCard = () => {
-    console.log('text:', this.props.text)
-  }
-
-  render() {
-    return (
-      <CardContainer id={this.props.id}>
-        <TopBar>
-          <Left>
-            <IconNote>
-              <Bell color="#999" size={14} />
-              <Badge isNew={this.props.isNew} />
-            </IconNote>
-            <BarTitle>{this.props.barTitle}</BarTitle>
-            <Tag normal isNote={this.props.isNote}>
-              待审批
-            </Tag>
-          </Left>
-          <Right>
-            <Date>2018-01-01</Date>
-            <Time>12:00:59</Time>
-          </Right>
-          <IconClose onClick={this.removeNoteCard}>
-            <X color="#999" size={14} />
-          </IconClose>
-        </TopBar>
-        <TextContent>{this.props.text}</TextContent>
-      </CardContainer>
-    )
-  }
+NoteCard.propTypes = {
+  text: PropTypes.string.isRequired,
+  isNew: PropTypes.bool,
+  barTitle: PropTypes.string,
 }
 
 NoteCard.defaultProps = {
