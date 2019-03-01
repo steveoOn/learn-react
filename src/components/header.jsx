@@ -9,8 +9,12 @@ const NavContainer = styled.header`
   display: flex;
   width: 100%;
   height: 55px;
-  /* position: relative; */
-  background: #53a600;
+  background-image: linear-gradient(
+    -90deg,
+    #60bd94 0%,
+    #54a18b 56%,
+    #355775 100%
+  );
 `
 const StyleLink = styled(Link)`
   color: white;
@@ -68,14 +72,15 @@ const Header = props => {
       <img
         style={{ width: '28px', alignSelf: 'center', marginLeft: '6px' }}
         src={logo}
+        alt="logo"
       />
       <H>
         <StyleLink to="/">{props.siteTitle}</StyleLink>
       </H>
       <PageTabGroup>
-        <div text="page 2" router="page-2" />
-        <div text="page 3" router="page-3" />
-        <div text="page 4" router="page-4" />
+        <div text="home" router="home" />
+        <div text="frist" router="page-1" />
+        <div text="second" router="page-2" />
       </PageTabGroup>
       <RightWrap>
         <NavIconWrap>
@@ -87,7 +92,11 @@ const Header = props => {
           </IconBtn>
         </NavIconWrap>
         <UserWrap>
-          <img style={{ width: '34px', height: '34px' }} src={logo} />
+          <img
+            style={{ width: '34px', height: '34px' }}
+            src={logo}
+            alt="avatar"
+          />
           <UserName>username</UserName>
         </UserWrap>
       </RightWrap>

@@ -11,6 +11,7 @@ const NoticeContainer = styled.div`
   position: absolute;
   right: ${props => props.right || '20px'};
   margin-top: 8px;
+  background: white;
 `
 
 const DropdownNotice = props => {

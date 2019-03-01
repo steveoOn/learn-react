@@ -1,0 +1,5 @@
+@font-face {
+  font-family: 'SF Mono';
+  src: local('SF Mono'), local('SFMono-Semibold'),
+    url(./font/SFMono-Semibold.otf);
+}

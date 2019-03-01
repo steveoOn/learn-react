@@ -2,11 +2,10 @@ import React from 'react'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 
-const ForthPage = () => (
+const SecondPage = () => (
   <Layout>
-    <SEO title="Page four" />
-    <h1>Forth page</h1>
+    <SEO title="Page two" />
   </Layout>
 )
 
-export default ForthPage
+export default SecondPage
