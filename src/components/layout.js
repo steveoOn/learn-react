@@ -17,6 +17,7 @@ const Label = styled.div``
 const Layout = ({ children }) => {
   const [isNoteOpen, setIsNotOpen] = useState(false)
   const [isTodoOpen, setIsTodoOpen] = useState(false)
+  const [isCheck, setIsCheck] = useState(false)
 
   const handleNote = () => {
     if (isNoteOpen) {
@@ -35,6 +36,14 @@ const Layout = ({ children }) => {
     }
   }
 
+  const handleCheck = checkValue => {
+    if (checkValue) {
+      setIsCheck(true)
+    } else {
+      setIsCheck(false)
+    }
+  }
+
   return (
     <StaticQuery
       query={graphql`
@@ -47,6 +56,29 @@ const Layout = ({ children }) => {
         }
       `}
       render={data => {
+        const eachTodayNote = Notification.today.contents.map(content => (
+          <div
+            isNew
+            isNote={content.isNote}
+            text={content.text}
+            key={content.text}
+            date={content.date}
+            time={content.time}
+            barTitle={content.barTitle}
+          />
+        ))
+
+        const eachEarlyNote = Notification.early.contents.map(content => (
+          <div
+            isNote={content.isNote}
+            text={content.text}
+            key={content.text}
+            date={content.date}
+            time={content.time}
+            barTitle={content.barTitle}
+          />
+        ))
+
         return (
           <>
             <Header
@@ -59,28 +91,18 @@ const Layout = ({ children }) => {
                 <DropdownNotice>
                   <TabGroup isNote center>
                     <Label label="通知" secondary>
-                      <TodayNoteContent>
-                        {Notification.today.contents.map(content => (
-                          <div
-                            isNew
-                            isNote
-                            text={content.text}
-                            key={content.text}
-                            date={content.date}
-                            time={content.time}
-                          />
-                        ))}
+                      <TodayNoteContent
+                        onChecked={handleCheck}
+                        passCheckedValue={isCheck}
+                      >
+                        {isCheck
+                          ? eachTodayNote.filter(n => n.props.isNote === false)
+                          : eachTodayNote}
                       </TodayNoteContent>
                       <EarlyNoteContent>
-                        {Notification.early.contents.map(content => (
-                          <div
-                            isNote
-                            text={content.text}
-                            key={content.text}
-                            date={content.date}
-                            time={content.time}
-                          />
-                        ))}
+                        {isCheck
+                          ? eachEarlyNote.filter(n => n.props.isNote === false)
+                          : eachEarlyNote}
                       </EarlyNoteContent>
                       <NoContent text="没有更多通知了" />
                     </Label>
@@ -98,6 +120,8 @@ const Layout = ({ children }) => {
                         key={content.text}
                         text={content.text}
                         barTitle={content.barTitle}
+                        isTodo
+                        isNote
                       />
                     ))}
                   </TodayNoteContent>
@@ -107,6 +131,8 @@ const Layout = ({ children }) => {
                         key={content.text}
                         text={content.text}
                         barTitle={content.barTitle}
+                        isTodo
+                        isNote
                       />
                     ))}
                   </EarlyNoteContent>

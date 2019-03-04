@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components'
-import { Bell, X } from 'react-feather'
+import { Bell, X, Volume1 } from 'react-feather'
 
 const CardContainer = styled.li`
   width: 348px;
@@ -106,7 +106,7 @@ const Tag = styled.div`
   font-weight: 400;
   align-self: center;
   text-align: center;
-  display: ${props => (props.isNote ? 'none' : 'initial')};
+  display: ${props => (props.isTodo ? 'initial' : 'none')};
 
   ${props =>
     props.normal &&
@@ -123,11 +123,15 @@ const NoteCard = props => {
       <TopBar>
         <Left>
           <IconNote>
-            <Bell color="#999" size={14} />
+            {props.isNote ? (
+              <Bell color="#999" size={14} />
+            ) : (
+              <Volume1 color="#999" size={16} />
+            )}
             <Badge isNew={props.isNew} />
           </IconNote>
           <BarTitle>{props.barTitle}</BarTitle>
-          <Tag normal isNote={props.isNote}>
+          <Tag normal isTodo={props.isTodo}>
             待审批
           </Tag>
         </Left>
@@ -154,6 +158,7 @@ NoteCard.defaultProps = {
   text:
     '马上到期了！内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式',
   barTitle: '通知',
+  isTodo: false,
 }
 
 export default NoteCard

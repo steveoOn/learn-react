@@ -7,6 +7,8 @@ export const Notification = {
       {
         text:
           '你的劳动合同编号 2018092625553 马上到期了！内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样式内容特别长超出了的显示样',
+        barTitle: '通知',
+        isNote: true,
         date: moment().format('L'),
         time: moment()
           .startOf('hour')
@@ -14,6 +16,8 @@ export const Notification = {
       },
       {
         text: '本月薪资已发放。两行文字效果，两行文字效果两行文字效果',
+        barTitle: '公告',
+        isNote: false,
         date: moment().format('L'),
         time: moment()
           .startOf('hour')
@@ -21,6 +25,8 @@ export const Notification = {
       },
       {
         text: '你的同事李晓明刚刚转正了！',
+        barTitle: '通知',
+        isNote: true,
         date: moment().format('L'),
         time: moment()
           .startOf('day')
@@ -32,13 +38,17 @@ export const Notification = {
     contents: [
       {
         text: '这是一条稍早的消息，按时间排序',
+        barTitle: '通知',
+        isNote: true,
         date: moment('20190113').format('L'),
         time: moment('20190113')
           .startOf('day')
           .fromNow(),
       },
       {
-        text: '这是一条稍早的消息',
+        text: '这是一条稍早的公告内容',
+        barTitle: '公告',
+        isNote: false,
         date: moment('20181123').format('L'),
         time: moment('20181123')
           .startOf('day')

@@ -19,13 +19,22 @@ const EarlyNoteContent = props => {
     <EarlyContent>
       <Title>稍早</Title>
       {React.Children.toArray(props.children).map(child => {
-        const { isNew, text, isNote, barTitle, date, time } = child.props
+        const {
+          isNew,
+          text,
+          isNote,
+          barTitle,
+          date,
+          time,
+          isTodo,
+        } = child.props
         return (
           <NoteCard
             isNew={isNew}
             text={text}
             key={text}
             isNote={isNote}
+            isTodo={isTodo}
             barTitle={barTitle}
             date={date}
             time={time}
