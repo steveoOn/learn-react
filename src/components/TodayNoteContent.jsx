@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import NoteCard from './NoteCard'
+import CheckableTag from './CheckableTag'
 
 const TodayContent = styled.ol`
   padding: 0;
@@ -12,15 +13,6 @@ const Title = styled.h1`
   font-weight: 500;
   color: rgba(102, 102, 102, 1);
   margin: 14px;
-`
-
-const Checkbox = styled.input`
-  ::before {
-    background: white;
-    border: 1px solid rgb(96, 190, 148);
-    width: 14px;
-    height: 14px;
-  }
 `
 
 const TodayNoteContent = props => {
@@ -45,16 +37,13 @@ const TodayNoteContent = props => {
             width: '80%',
           }}
         >
-          <Checkbox
-            type="checkbox"
+          <CheckableTag
             id="filter"
             name="filter"
             onChange={e => onCheckedChange(e.target.checked)}
             checked={props.passCheckedValue}
+            text="公告"
           />
-          <label htmlFor="filter" style={{ fontSize: '14px', color: '#666' }}>
-            只看公告
-          </label>
         </div>
       </div>
       {React.Children.toArray(props.children).map(child => {
